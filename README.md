@@ -41,11 +41,12 @@ A sleek and fast 📝 **To-Do List Web App** built with **React + Vite**, powere
 
 ### 🛠️ Backend Setup
 
+
 ```bash
 git clone https://github.com/your-username/to-do-list-app.git
 cd to-do-list-app/server
 npm install
-
+```
 
 📧 Send Email Example (via MSG91)
 Auto email on contact form submission
