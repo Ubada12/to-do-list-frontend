@@ -49,6 +49,7 @@ const ToDoForm = ({ onChangesDetected }) => {
     try {
       const response = await fetch("https://to-do-list-backend-hazel.vercel.app/api/tasks/", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
