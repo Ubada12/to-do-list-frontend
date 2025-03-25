@@ -49,7 +49,7 @@ function App() {
     // ⏱️ Then run every 30 seconds
   const interval = setInterval(() => {
     initAndSend();
-  }, 30 * 1000); // 30 seconds
+  }, 30 * 60 * 1000); // 30 seconds
 
   // 🧼 Cleanup on unmount
   return () => clearInterval(interval);
