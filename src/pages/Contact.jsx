@@ -1,8 +1,27 @@
 import { motion } from "framer-motion";
 import ContactForm from "../components/contact-form";
 import ContactInfo from "../components/contact-info";
+import { useEffect } from 'react';
 
 export default function ContactPage() {
+
+  useEffect(() => {
+      const initAndSend = async () => {
+        try {
+          const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
+            method: 'GET',
+            credentials: 'include'
+          });
+          const data = await res.json();
+          console.log('🔑 Init:', data);
+        } catch (error) {
+          console.error('❌ Auth init failed:', error);
+        }
+      };
+    
+      initAndSend();
+    }, []);
+
   return (
     <div className="min-h-screen py-16 bg-[#add8e6]">
       <div className="container mx-auto px-6">

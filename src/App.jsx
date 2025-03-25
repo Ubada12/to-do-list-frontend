@@ -7,6 +7,8 @@ import TodoList from './pages/ToDoList';
 import Footer from './components/footer'; // Make sure the path is correct
 import { Box } from '@mui/material';
 import BouncingDots from './components/LoadingAnimation';
+import { useEffect } from 'react';
+
 // Protected Route wrapper component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -27,6 +29,31 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
+
+  useEffect(() => {
+    const initAndSend = async () => {
+      try {
+        const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
+          method: 'GET',
+          credentials: 'include'
+        });
+        const data = await res.json();
+        console.log('🔑 Init:', data);
+      } catch (error) {
+        console.error('❌ Auth init failed:', error);
+      }
+    };
+  
+    initAndSend();
+
+    // ⏱️ Then run every 30 seconds
+  const interval = setInterval(() => {
+    initAndSend();
+  }, 30 * 1000); // 30 seconds
+
+  // 🧼 Cleanup on unmount
+  return () => clearInterval(interval);
+  }, []);
 
   return (
     <BrowserRouter>

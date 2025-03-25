@@ -14,24 +14,7 @@ export default function Home() {
   const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
-  useEffect(() => {
-    const initAndSend = async () => {
-      try {
-        const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
-          method: 'GET',
-          credentials: 'include'
-        });
-        const data = await res.json();
-        console.log('🔑 Init:', data);
-      } catch (error) {
-        console.error('Auth init failed:', error);
-      }
-    };
-  
-    initAndSend();
-  }, []);
-  
-  
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-sky-600 to-cyan-800 text-black">
       <main className="flex-1">
