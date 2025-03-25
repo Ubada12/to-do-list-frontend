@@ -9,8 +9,7 @@
         "build": "vite build",
         "lint": "eslint .",
         "preview": "vite preview",
-        "tailwind": "tailwindcss",
-        "prebuild": "chmod +x node_modules/.bin/vite"
+        "tailwind": "tailwindcss"
     },
     "dependencies": {
         "@auth0/auth0-react": "^2.3.0",
