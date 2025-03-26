@@ -20,7 +20,9 @@ const TodoList = () => {
         const token = await getAccessTokenSilently({
           audience: 'https://dev-f5h4m5nvswxd5wj0.us.auth0.com/api/v2/',
         });
-        
+  
+        console.log('🔑 Access Token:', token);
+  
         const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
           method: 'POST',
           credentials: 'include',
@@ -28,18 +30,29 @@ const TodoList = () => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          // No need to send email manually!
           body: JSON.stringify({})
         });
-        const data = await res.json();
-        console.log('🔑 Init:', data);
+  
+        console.log('📡 Raw response:', res);
+  
+        const contentType = res.headers.get("content-type");
+  
+        if (contentType && contentType.includes("application/json")) {
+          const data = await res.json();
+          console.log('✅ JSON Response:', data);
+        } else {
+          const text = await res.text();
+          console.warn('⚠️ Non-JSON response:', text);
+        }
+  
       } catch (error) {
         console.error('❌ Auth init failed:', error);
       }
     };
   
     initAndSend();
-      }, []);
+  }, []);
+  
       
   return (
     <Box
