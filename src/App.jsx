@@ -34,8 +34,14 @@ function App() {
     const initAndSend = async () => {
       try {
         const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
-          method: 'GET',
-          credentials: 'include'
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          // No need to send email manually!
+          body: JSON.stringify({})
         });
         const data = await res.json();
         console.log('🔑 Init:', data);

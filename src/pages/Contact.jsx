@@ -6,20 +6,26 @@ import { useEffect } from 'react';
 export default function ContactPage() {
 
   useEffect(() => {
-      const initAndSend = async () => {
-        try {
-          const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
-            method: 'GET',
-            credentials: 'include'
-          });
-          const data = await res.json();
-          console.log('🔑 Init:', data);
-        } catch (error) {
-          console.error('❌ Auth init failed:', error);
-        }
-      };
-    
-      initAndSend();
+    const initAndSend = async () => {
+      try {
+        const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          // No need to send email manually!
+          body: JSON.stringify({})
+        });
+        const data = await res.json();
+        console.log('🔑 Init:', data);
+      } catch (error) {
+        console.error('❌ Auth init failed:', error);
+      }
+    };
+  
+    initAndSend();
     }, []);
 
   return (
