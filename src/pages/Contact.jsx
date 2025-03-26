@@ -2,12 +2,14 @@ import { motion } from "framer-motion";
 import ContactForm from "../components/contact-form";
 import ContactInfo from "../components/contact-info";
 import { useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function ContactPage() {
-
+  const { getAccessTokenSilently } = useAuth0();
   useEffect(() => {
     const initAndSend = async () => {
       try {
+        const token = await getAccessTokenSilently();
         const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
           method: 'POST',
           credentials: 'include',

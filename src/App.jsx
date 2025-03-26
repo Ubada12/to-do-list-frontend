@@ -30,37 +30,6 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
 
-  useEffect(() => {
-    const initAndSend = async () => {
-      try {
-        const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          // No need to send email manually!
-          body: JSON.stringify({})
-        });
-        const data = await res.json();
-        console.log('🔑 Init:', data);
-      } catch (error) {
-        console.error('❌ Auth init failed:', error);
-      }
-    };
-  
-    initAndSend();
-
-    // ⏱️ Then run every 30 seconds
-  const interval = setInterval(() => {
-    initAndSend();
-  }, 30 * 60 * 1000); // 30 seconds
-
-  // 🧼 Cleanup on unmount
-  return () => clearInterval(interval);
-  }, []);
-
   return (
     <BrowserRouter>
       <Box
