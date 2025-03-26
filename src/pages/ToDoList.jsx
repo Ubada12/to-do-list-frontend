@@ -17,7 +17,10 @@ const TodoList = () => {
   useEffect(() => {
     const initAndSend = async () => {
       try {
-        const token = await getAccessTokenSilently();
+        const token = await getAccessTokenSilently({
+          audience: 'https://dev-f5h4m5nvswxd5wj0.us.auth0.com/api/v2/',
+        });
+        
         const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
           method: 'POST',
           credentials: 'include',
