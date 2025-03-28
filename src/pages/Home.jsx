@@ -15,6 +15,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
 
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-sky-600 to-cyan-800 text-black">
       <main className="flex-1">

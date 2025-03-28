@@ -7,7 +7,6 @@ import TodoList from './pages/ToDoList';
 import Footer from './components/footer'; // Make sure the path is correct
 import { Box } from '@mui/material';
 import BouncingDots from './components/LoadingAnimation';
-import { useEffect } from 'react';
 
 // Protected Route wrapper component
 const ProtectedRoute = ({ children }) => {

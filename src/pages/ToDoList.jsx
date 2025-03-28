@@ -18,7 +18,7 @@ const TodoList = () => {
     const initAndSend = async () => {
       try {
         const token = await getAccessTokenSilently({
-          audience: 'https://dev-f5h4m5nvswxd5wj0.us.auth0.com/api/v2/',
+          audience: 'https://todo.api',
         });
   
         console.log('🔑 Access Token:', token);
