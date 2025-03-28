@@ -49,12 +49,13 @@ console.log(date_time);
           template_id: "template_18_09_2024_11_09_3"
       };
   }
-
+  const { getAccessTokenSilently } = useAuth0();
+  const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
   try {
     const response = await fetch("https://to-do-list-backend-hazel.vercel.app/api/tasks/send-email", {
       method: 'POST',
-      credentials: 'include',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(jsonPayload),

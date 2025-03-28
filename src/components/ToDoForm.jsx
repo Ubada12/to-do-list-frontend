@@ -46,11 +46,13 @@ const ToDoForm = ({ onChangesDetected }) => {
     // Ensure task completion flag is set
     task.completed = false;
     console.log("Task data:", task);
+    const { getAccessTokenSilently } = useAuth0();
+    const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
     try {
       const response = await fetch("https://to-do-list-backend-hazel.vercel.app/api/tasks/", {
         method: "POST",
-        credentials: "include",
         headers: {
+          'Authorization': `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email: user.email, taskData: task }),

@@ -1,50 +1,8 @@
 import { motion } from "framer-motion";
 import ContactForm from "../components/contact-form";
 import ContactInfo from "../components/contact-info";
-import { useEffect } from 'react';
-import { useAuth0 } from "@auth0/auth0-react";
 
 export default function ContactPage() {
-  const { getAccessTokenSilently } = useAuth0();
-  useEffect(() => {
-    const initAndSend = async () => {
-      try {
-        const token = await getAccessTokenSilently({
-          audience: 'https://todo.api',
-        });
-  
-        console.log('🔑 Access Token:', token);
-  
-        const res = await fetch('https://to-do-list-backend-hazel.vercel.app/auth/init', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({data: 'Contact Page'})
-        });
-  
-        console.log('📡 Raw response:', res);
-  
-        const contentType = res.headers.get("content-type");
-  
-        if (contentType && contentType.includes("application/json")) {
-          const data = await res.json();
-          console.log('✅ JSON Response:', data);
-        } else {
-          const text = await res.text();
-          console.warn('⚠️ Non-JSON response:', text);
-        }
-  
-      } catch (error) {
-        console.error('❌ Auth init failed:', error);
-      }
-    };
-  
-    initAndSend();
-  }, []);
-  
 
   return (
     <div className="min-h-screen py-16 bg-[#add8e6]">

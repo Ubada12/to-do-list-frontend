@@ -26,13 +26,16 @@ import { keyframes } from '@emotion/react';
 import SaveIcon from "@mui/icons-material/Save";
 import TaskAlert from './TaskAlert';  // Import TaskAlert component
 
+var {getAccessTokenSilently} = useAuth0();
+
 async function updateTask(email, task){
   try {
     console.log('Updating task:', task._id);
+    const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
     const response = await fetch(`https://to-do-list-backend-hazel.vercel.app/api/tasks/${task._id}`, {
       method: 'PUT',
-      credentials: 'include',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: email, taskData: task }),
@@ -55,10 +58,11 @@ async function createTask(email, task){
   try {
     task.completed= true;
     console.log('Creating task:', task);
+    const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
     const response = await fetch('https://to-do-list-backend-hazel.vercel.app/api/tasks/', {
       method: 'POST',
-      credentials: 'include',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: email, taskData: task }),
@@ -80,10 +84,11 @@ async function createTask(email, task){
 async function DeleteTask(email, task){
   try {
     console.log('Deleting task:', task);
+    const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
     const response = await fetch(`https://to-do-list-backend-hazel.vercel.app/api/tasks/${task._id}`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email: email }),
@@ -203,13 +208,13 @@ const TaskList = ({ changesDetected }) => {
       }
   
       console.log(`Fetching ${category} tasks...`);
-      
+      const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
       const response = await fetch(
         `https://to-do-list-backend-hazel.vercel.app/api/tasks/?email=${user.email}&category=${category}`,
         {
           method: 'GET',
-          credentials: 'include',
           headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         }
