@@ -94,6 +94,7 @@ const formSchema = z.object({
 
 export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
   const { getAccessTokenSilently, user } = useAuth0();
 
@@ -129,12 +130,16 @@ export default function ContactForm() {
 
   const onSubmit = async (values) => {
     console.log(values);
+    setIsLoading(true);
     if (await sendEmailRequest(values.name, user.email, values.phone, values.message, true, getAccessTokenSilently) &&
       await sendEmailRequest(values.name, values.email, values.phone, values.message, false, getAccessTokenSilently)) {
       setIsSubmitted(true);
+      setIsLoading(false);
       const currentTime = Date.now();
       sessionStorage.setItem("submissionTime", currentTime.toString()); // Store timestamp in sessionStorage
     } else {
+      setIsLoading(false);
+      // Handle error in sending email
       alert("Error in sending email. Please try again later.");
     }
   };
@@ -223,12 +228,16 @@ export default function ContactForm() {
           )}
         />
         <Button 
-  type="submit" 
-  className="w-full bg-teal-500 text-white hover:bg-teal-600 p-3 rounded-lg"
-  disabled={remainingTime > 0} // Disable the button if timer is active
->
-  {remainingTime > 0 ? `Please wait ${formatTime(remainingTime)}` : "Submit"}
-</Button>
+         type="submit" 
+         className="w-full bg-teal-500 text-white hover:bg-teal-600 p-3 rounded-lg"
+         disabled={remainingTime > 0} // Disable the button if timer is active
+        >
+          {remainingTime > 0
+           ? `⏳ Please wait ${formatTime(remainingTime)}`
+           : isLoading
+           ? "🔄 Submitting..."
+           : "✅ Submit"}
+        </Button>
 
       </motion.form>
     </Form>
