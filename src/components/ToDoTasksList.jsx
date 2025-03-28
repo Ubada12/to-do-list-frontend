@@ -26,9 +26,7 @@ import { keyframes } from '@emotion/react';
 import SaveIcon from "@mui/icons-material/Save";
 import TaskAlert from './TaskAlert';  // Import TaskAlert component
 
-var {getAccessTokenSilently} = useAuth0();
-
-async function updateTask(email, task){
+async function updateTask(email, task, getAccessTokenSilently){
   try {
     console.log('Updating task:', task._id);
     const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
@@ -54,7 +52,7 @@ async function updateTask(email, task){
   }
 }
 
-async function createTask(email, task){
+async function createTask(email, task, getAccessTokenSilently){
   try {
     task.completed= true;
     console.log('Creating task:', task);
@@ -81,7 +79,7 @@ async function createTask(email, task){
   }
 }
 
-async function DeleteTask(email, task){
+async function DeleteTask(email, task, getAccessTokenSilently){
   try {
     console.log('Deleting task:', task);
     const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
@@ -160,7 +158,7 @@ const fadeIn = keyframes`
 `;
 
 const TaskList = ({ changesDetected }) => {
-  const { user } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const [alertText, setAlertText] = useState('');      // State to control alert message
   const [showAlert, setShowAlert] = useState(false);  // State to control alert visibility
   const [dailyTasks, setDailyTasks] = useState([]);
@@ -182,7 +180,7 @@ const TaskList = ({ changesDetected }) => {
     console.log('Saving task:', editedTask);
     if(areObjectsDifferent(task, editedTask))
     {
-      if(await updateTask(user.email, editedTask))
+      if(await updateTask(user.email, editedTask, getAccessTokenSilently))
       {
         console.log('Task updated!');
         (editedTask.daily === true) ? await fetchTasks('daily', setDailyTasks) : await fetchTasks('regular', setRegularTasks);
@@ -252,8 +250,8 @@ const TaskList = ({ changesDetected }) => {
         setUndoTask(false);
         console.log('Task completed!');
         
-        if (await DeleteTask(user.email, task)) {
-          if (await createTask(user.email, task)) {
+        if (await DeleteTask(user.email, task, getAccessTokenSilently)) {
+          if (await createTask(user.email, task, getAccessTokenSilently)) {
             console.log('Task completed and created!');
             await fetchTasks('daily', setDailyTasks);
             await fetchTasks('regular', setRegularTasks);
@@ -279,7 +277,7 @@ const TaskList = ({ changesDetected }) => {
       if (!undoTask) {
         setUndoTask(false);
         console.log('Task  Deleted!!');
-        if(await DeleteTask(user.email, task))
+        if(await DeleteTask(user.email, task, getAccessTokenSilently))
         {
         await fetchTasks('daily', setDailyTasks);
         await fetchTasks('regular', setRegularTasks);
