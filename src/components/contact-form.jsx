@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import SubmissionSuccess from "./submission-success";
 import { useAuth0 } from "@auth0/auth0-react";
 
-async function sendEmailRequest(user_name, user_email, user_phoneNo, user_msg, isUserEmail) {
+async function sendEmailRequest(user_name, user_email, user_phoneNo, user_msg, isUserEmail, getAccessTokenSilently) {
   console.log(user_name, user_email, user_phoneNo, user_msg, isUserEmail);
   const currentTime = new Date();
 
@@ -49,7 +49,7 @@ console.log(date_time);
           template_id: "template_18_09_2024_11_09_3"
       };
   }
-  const { getAccessTokenSilently } = useAuth0();
+  
   const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
   try {
     const response = await fetch("https://to-do-list-backend-hazel.vercel.app/api/tasks/send-email", {
@@ -95,7 +95,7 @@ const formSchema = z.object({
 export default function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
-  const { user } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -129,8 +129,8 @@ export default function ContactForm() {
 
   const onSubmit = async (values) => {
     console.log(values);
-    if (await sendEmailRequest(values.name, user.email, values.phone, values.message, true) &&
-      await sendEmailRequest(values.name, values.email, values.phone, values.message, false)) {
+    if (await sendEmailRequest(values.name, user.email, values.phone, values.message, true, getAccessTokenSilently) &&
+      await sendEmailRequest(values.name, values.email, values.phone, values.message, false, getAccessTokenSilently)) {
       setIsSubmitted(true);
       const currentTime = Date.now();
       sessionStorage.setItem("submissionTime", currentTime.toString()); // Store timestamp in sessionStorage
