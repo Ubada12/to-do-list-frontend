@@ -22,7 +22,7 @@ export default function ContactPage() {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({})
+          body: JSON.stringify({data: 'Contact Page'})
         });
   
         console.log('📡 Raw response:', res);
