@@ -14,7 +14,8 @@ createRoot(document.getElementById('root')).render(
       domain="dev-f5h4m5nvswxd5wj0.us.auth0.com"
       clientId="sJmYWHonn9mBi6RFZSBq58NgjHRx8Ch8"
       authorizationParams={{
-        redirect_uri: window.location.origin
+        redirect_uri: window.location.origin,
+        audience: "https://todo.api",
       }}
     >
       <App />
