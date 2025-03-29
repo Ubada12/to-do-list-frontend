@@ -273,7 +273,7 @@ const TaskList = ({ changesDetected }) => {
     setAlertText(`Task "${trimmedTitle}" deleted!`);
     setShowAlert(true);  // Show alert when the icon is clicke
     setTimeout(async () => {
-      console.log('Alert timeout!');
+      console.log('Alert timeout!', undoTask);
       if (!undoTask) {
         setUndoTask(false);
         console.log('Task  Deleted!!');
@@ -292,7 +292,7 @@ const TaskList = ({ changesDetected }) => {
   }
 
   const handleUndo = () => {
-    console.log('Undo clicked!');
+    console.log('Undo clicked!', undoTask);
     setUndoTask(true);
   }
 
