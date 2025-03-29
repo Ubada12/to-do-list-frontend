@@ -243,12 +243,13 @@ const TaskList = ({ changesDetected }) => {
 
   const handleCompleteIconClick = async (task) => {
     console.log('Complete icon clicked!', task);
+    setUndoTask(false);
+    undoTaskRef.current = false;
     setAlertText(`Task "${task.title}" completed!`);
     setShowAlert(true);  // Show alert when the icon is clicked
     setTimeout(async () => {
-      console.log('Alert timeout!');
-      if (!undoTask) {
-        setUndoTask(false);
+      console.log('Alert timeout!', undoTaskRef.current);
+      if (!undoTaskRef.current) {
         console.log('Task completed!');
         
         if (await DeleteTask(user.email, task, getAccessTokenSilently)) {
@@ -264,6 +265,10 @@ const TaskList = ({ changesDetected }) => {
           alert('Error deleting task!');
         }
         
+      }
+      else
+      {
+        console.log('Undo was clicked — task NOT completed.');
       }
     }, 8000);
   }
