@@ -8,7 +8,7 @@ const Footer = () => {
     { icon: <FaFacebookF />, href: "https://facebook.com" },
     { icon: <FaTwitter />, href: "https://twitter.com" },
     { icon: <FaInstagram />, href: "https://instagram.com" },
-    { icon: <FaLinkedinIn />, href: "https://linkedin.com" },
+    { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/in/ubada-ghavte-54019723b/" },
   ]
 
   const footerAnimation = {

@@ -13,15 +13,15 @@ export default function ContactInfo() {
       <div className="space-y-4">
         <div className="flex items-center space-x-3 text-lg text-gray-700">
           <Mail className="h-6 w-6 text-teal-500" />
-          <span>contact@example.com</span>
+          <span>info@eng.rizvi.edu.in</span>
         </div>
         <div className="flex items-center space-x-3 text-lg text-gray-700">
           <Phone className="h-6 w-6 text-teal-500" />
-          <span>+1 (555) 123-4567</span>
+          <span>+91 22 69778690</span>
         </div>
         <div className="flex items-center space-x-3 text-lg text-gray-700">
           <MapPin className="h-6 w-6 text-teal-500" />
-          <span>123 Business St, City, State 12345</span>
+          <span>New Rizvi Educational Complex, Off. Carter Road, Bandra (W), Mumbai – 400 050.</span>
         </div>
         <div className="flex items-center space-x-3 text-lg text-gray-700">
           <Clock className="h-6 w-6 text-teal-500" />
