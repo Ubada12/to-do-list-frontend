@@ -25,7 +25,7 @@ const ToDoForm = ({ onChangesDetected }) => {
   const [changesDetected, setChangesDetected] = useState(false);
   const [showAlert, setShowAlert] = useState(false);  // State to control alert visibility
   const [alertText, setAlertText] = useState('');      // State to control alert message
-  const { user } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -46,7 +46,6 @@ const ToDoForm = ({ onChangesDetected }) => {
     // Ensure task completion flag is set
     task.completed = false;
     console.log("Task data:", task);
-    const { getAccessTokenSilently } = useAuth0();
     const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
     try {
       const response = await fetch("https://to-do-list-backend-hazel.vercel.app/api/tasks/", {
