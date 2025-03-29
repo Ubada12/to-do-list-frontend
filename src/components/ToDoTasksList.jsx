@@ -158,6 +158,7 @@ const fadeIn = keyframes`
 `;
 
 const TaskList = ({ changesDetected }) => {
+  const undoTaskRef = useRef(false);
   const { getAccessTokenSilently, user } = useAuth0();
   const [alertText, setAlertText] = useState('');      // State to control alert message
   const [showAlert, setShowAlert] = useState(false);  // State to control alert visibility
@@ -270,12 +271,13 @@ const TaskList = ({ changesDetected }) => {
   const handleDeleteIconClick = async (task) => {
     const trimmedTitle = task.title.trim().substring(0, 30);
     console.log('Delete icon clicked!', task);
+    setUndoTask(false);
+    undoTaskRef.current = false;
     setAlertText(`Task "${trimmedTitle}" deleted!`);
     setShowAlert(true);  // Show alert when the icon is clicke
     setTimeout(async () => {
-      console.log('Alert timeout!', undoTask);
-      if (!undoTask) {
-        setUndoTask(false);
+      console.log('Alert timeout!', undoTaskRef.current);
+      if (!undoTaskRef.current) {
         console.log('Task  Deleted!!');
         if(await DeleteTask(user.email, task, getAccessTokenSilently))
         {
@@ -288,13 +290,18 @@ const TaskList = ({ changesDetected }) => {
           alert('Error deleting task!');
         }
       }
+      else
+      {
+        console.log('Undo was clicked — task NOT deleted.');
+      }
     }, 8000);
   }
 
   const handleUndo = () => {
-    setUndoTask(true);
-    console.log('Undo clicked!', undoTask);
-  }
+    undoTaskRef.current = true;
+    setUndoTask(true); // Optional, just for UI
+    console.log('Undo clicked!', undoTaskRef.current);
+  };
 
   return (
     <Box
