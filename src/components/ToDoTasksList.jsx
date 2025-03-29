@@ -292,8 +292,8 @@ const TaskList = ({ changesDetected }) => {
   }
 
   const handleUndo = () => {
-    console.log('Undo clicked!', undoTask);
     setUndoTask(true);
+    console.log('Undo clicked!', undoTask);
   }
 
   return (
