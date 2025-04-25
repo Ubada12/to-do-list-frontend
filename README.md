@@ -48,24 +48,24 @@ cd to-do-list-app/server
 npm install
 ```
 
-📧 Send Email Example (via MSG91)
-Auto email on contact form submission
+- 📧 Send Email Example (via MSG91)
+- Auto email on contact form submission
 
 Authenticated using secure cookie
 
 ✨ Features
-✅ Add / edit / delete tasks
-✅ Categorized views (daily, completed, regular)
-🔒 Cookie-based JWT auth
-📧 Email system via MSG91
-💬 Beautiful UI with MUI & Framer Motion
-🚀 Deployed and production-ready
+- ✅ Add / edit / delete tasks
+- ✅ Categorized views (daily, completed, regular)
+- 🔒 Cookie-based JWT auth
+- 📧 Email system via MSG91
+- 💬 Beautiful UI with MUI & Framer Motion
+- 🚀 Deployed and production-ready
 
 📜 License
 MIT © Ubada Ghavte
 
 💬 Contact
-📧 ubadaghawte2005@gmail.com
-🌍 https://ubadaa.site
+- 📧 ubadaghawte2005@gmail.com
+- 🌍 https://ubadaa.site
 
 Made with ❤️ by Ubada Ghavte
