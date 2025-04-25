@@ -39,17 +39,12 @@ A sleek and fast 📝 **To-Do List Web App** built with **React + Vite**, powere
 
 ---
 
-### 🛠️ Backend Setup
+### 🛠️ Backend (Already Deployed)
 
+> 🚫 The backend source code is private.  
+> If you'd like access to the backend files, you can request it using the link below:
 
-```bash
-git clone https://github.com/your-username/to-do-list-app.git
-cd to-do-list-app/server
-npm install
-```
-
-- 📧 Send Email Example (via MSG91)
-- Auto email on contact form submission
+🔗 [**Request Access to Backend (Google Drive)**](https://drive.google.com/file/d/your_file_id/view?usp=sharing)
 
 Authenticated using secure cookie
 
