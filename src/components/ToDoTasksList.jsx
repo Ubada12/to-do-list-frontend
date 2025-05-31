@@ -633,7 +633,7 @@ const TaskList = ({ changesDetected }) => {
                                   color: "gray",
                                   wordWrap: "break-word",
                                   overflowWrap: "break-word",
-                                  whiteSpace: "normal", // Ensures description wraps properly
+                                  whiteSpace: "pre-line", // Ensures description wraps properly
                                 }}
                               >
                                 {task.description}
@@ -950,7 +950,7 @@ const TaskList = ({ changesDetected }) => {
                                     color: "gray",
                                     wordWrap: "break-word",
                                     overflowWrap: "break-word",
-                                    whiteSpace: "normal", // Ensures description wraps properly
+                                    whiteSpace: "pre-line", // Ensures description wraps properly
                                   }}
                                 >
                                   {task.description}
@@ -1126,7 +1126,7 @@ const TaskList = ({ changesDetected }) => {
                               primaryTypographyProps={{ sx: { marginBottom: 1 } }} // Adds spacing
                               primary={<Typography sx={{ textDecoration: 'line-through', wordWrap: "break-word", overflowWrap: "break-word", whiteSpace: "normal" }}>{task.title}</Typography>}
                               secondary={
-                                <Typography sx={{ fontSize: "0.9rem", color: "gray", wordWrap: "break-word", overflowWrap: "break-word", whiteSpace: "normal" }}>
+                                <Typography sx={{ fontSize: "0.9rem", color: "gray", wordWrap: "break-word", overflowWrap: "break-word", whiteSpace: "pre-line" }}>
                                   {task.description}
                                 </Typography>
                               }

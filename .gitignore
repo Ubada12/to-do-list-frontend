@@ -1,0 +1,10 @@
+# Ignore certificate and key files
+*.key
+*.crt
+*.pem
+
+# Ignore CA certs/keys if present
+ca.key
+ca.crt
+cert.key
+cert.crt
