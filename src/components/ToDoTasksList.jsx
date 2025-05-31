@@ -25,6 +25,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { keyframes } from '@emotion/react';
 import SaveIcon from "@mui/icons-material/Save";
 import TaskAlert from './TaskAlert';  // Import TaskAlert component
+import LoadingAnimation from './LoadingAnimation';
 
 async function updateTask(email, task, getAccessTokenSilently) {
   try {
@@ -168,6 +169,7 @@ const TaskList = ({ changesDetected }) => {
   const [undoTask, setUndoTask] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editedTask, setEditedTask] = useState(null);
+  const [loading, setLoading] = useState(true); // Controls full page loading
 
   const handleEditClick = (task) => {
     setEditingTaskId(task._id); // Set task to be edited
@@ -229,13 +231,24 @@ const TaskList = ({ changesDetected }) => {
   };
 
   useEffect(() => {
-    if (user?.email) {
-      console.log("User changed, fetching tasks...");
-      fetchTasks('daily', setDailyTasks);
-      fetchTasks('regular', setRegularTasks);
-      fetchTasks('completed', setCompletedTasks);
-    }
-  }, [user?.email, changesDetected]); // Use `user.email` instead of `user` to avoid infinite loop  
+    const loadTasks = async () => {
+      if (user?.email) {
+        console.log("User changed, fetching tasks...");
+        setLoading(true); // optional: show loading spinner
+
+        await Promise.all([
+          fetchTasks('daily', setDailyTasks),
+          fetchTasks('regular', setRegularTasks),
+          fetchTasks('completed', setCompletedTasks)
+        ]);
+
+        console.log("✅ All tasks fetched successfully!");
+        setLoading(false); // optional: hide loading spinner
+      }
+    };
+
+    loadTasks();
+  }, [user?.email, changesDetected]);
 
   const handleCompleteIconClick = async (task) => {
     console.log('Complete icon clicked!', task);
@@ -299,6 +312,22 @@ const TaskList = ({ changesDetected }) => {
     setUndoTask(true); // Optional, just for UI
     console.log('Undo clicked!', undoTaskRef.current);
   };
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          backgroundColor: 'background.default'
+        }}
+      >
+        <LoadingAnimation />
+      </Box>
+    );
+  }
 
   return (
     <Box
