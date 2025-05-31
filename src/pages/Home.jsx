@@ -8,12 +8,14 @@ import { useState, useEffect } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Alert } from "@mui/material";
+import SlideOverPanel from "../components/SlideOverPanel";
 
 export default function Home() {
   
   const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
+  const [showPanel, setShowPanel] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-sky-600 to-cyan-800 text-black">
@@ -38,7 +40,7 @@ export default function Home() {
         >
           Get Started
         </Button>
-      <Button variant="outline" className="border-black text-black hover:bg-black hover:text-cyan-500">Learn More</Button>
+      <Button variant="outline" className="border-black text-black hover:bg-black hover:text-cyan-500" onClick={() => setShowPanel(true)}>Learn More</Button>
     </div>
   </motion.div>
 </section>
@@ -140,6 +142,7 @@ export default function Home() {
                 </Button>
               </DialogActions>
             </Dialog>
+            <SlideOverPanel isOpen={showPanel} onClose={() => setShowPanel(false)} />
     </div>
   )
 }
