@@ -1,8 +1,15 @@
 import { X } from "lucide-react";
+import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Alert } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import CloseIcon from '@mui/icons-material/Close';
+import { Button } from "../components/ui/button";
 
 export default function InfoModal({ isOpen, onClose }) {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth0();
+  const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
 
   if (!isOpen) return null;
 
@@ -55,15 +62,70 @@ export default function InfoModal({ isOpen, onClose }) {
         </blockquote>
 
         <button
-          onClick={() => {
-            onClose(); // optional
-            navigate("/todolist");
-          }}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
-        >
-          Try It — It’s Free
-        </button>
+  onClick={() => {
+    if (isAuthenticated) {
+      navigate('/todo-list');
+    } else {
+      setOpenDialog(true);
+    }
+  }}
+  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
+>
+  Try It — It’s Free
+</button>
+
       </div>
+      <Dialog 
+              open={openDialog} 
+              onClose={() => setOpenDialog(false)}
+              PaperProps={{
+                sx: {
+                  width: '100%',
+                  maxWidth: '500px',
+                  m: 2,
+                  overflowX: 'hidden',  // Prevent horizontal scroll
+                  '& .MuiDialogTitle-root': {
+                    pb: 2,
+                  },
+                  '& .MuiDialogContent-root': {
+                    pb: 2,
+                    px: 3,
+                    overflowX: 'hidden',  // Prevent horizontal scroll
+                  },
+                  '& .MuiDialogActions-root': {
+                    px: 3,
+                    pb: 2,
+                  }
+                }
+              }}
+            >
+              <DialogTitle sx={{ pr: 6 }}>  {/* Added right padding for close button */}
+                Protected Page
+                <IconButton 
+                  edge="end" 
+                  color="inherit" 
+                  onClick={() => setOpenDialog(false)} 
+                  aria-label="close" 
+                  sx={{
+                    position: 'absolute', 
+                    right: 8, 
+                    top: 8
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </DialogTitle>
+              <DialogContent>
+                <Alert severity="info">
+                  Please sign up to access this page.
+                </Alert>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => setOpenDialog(false)} color="primary">
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
     </div>
   );
 }

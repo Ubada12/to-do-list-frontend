@@ -4,7 +4,7 @@ import { CheckCircle, Calendar, PaintBucket, BarChart2, Bell, Cloud, Plus, List,
 import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Alert } from "@mui/material";
