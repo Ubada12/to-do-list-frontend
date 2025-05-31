@@ -17,6 +17,7 @@ import { Button } from '@mui/material';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CircularProgress from '@mui/material/CircularProgress';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
@@ -170,6 +171,8 @@ const TaskList = ({ changesDetected }) => {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editedTask, setEditedTask] = useState(null);
   const [loading, setLoading] = useState(true); // Controls full page loading
+  const [pendingCompleteIds, setPendingCompleteIds] = useState([]);
+  const [pendingDeleteIds, setPendingDeleteIds] = useState([]);
 
   const handleEditClick = (task) => {
     setEditingTaskId(task._id); // Set task to be edited
@@ -251,6 +254,9 @@ const TaskList = ({ changesDetected }) => {
   }, [user?.email, changesDetected]);
 
   const handleCompleteIconClick = async (task) => {
+    if (pendingCompleteIds.includes(task._id)) return;
+
+    setPendingCompleteIds((prev) => [...prev, task._id]);
     console.log('Complete icon clicked!', task);
     setUndoTask(false);
     undoTaskRef.current = false;
@@ -278,10 +284,14 @@ const TaskList = ({ changesDetected }) => {
       else {
         console.log('Undo was clicked — task NOT completed.');
       }
+      setPendingCompleteIds((prev) => prev.filter(id => id !== task._id));
     }, 8000);
   }
 
   const handleDeleteIconClick = async (task) => {
+    if (pendingDeleteIds.includes(task._id)) return;
+    setPendingDeleteIds((prev) => [...prev, task._id]);
+
     const trimmedTitle = task.title.trim().substring(0, 30);
     console.log('Delete icon clicked!', task);
     setUndoTask(false);
@@ -304,6 +314,7 @@ const TaskList = ({ changesDetected }) => {
       else {
         console.log('Undo was clicked — task NOT deleted.');
       }
+      setPendingDeleteIds((prev) => prev.filter(id => id !== task._id));
     }, 8000);
   }
 
@@ -467,6 +478,7 @@ const TaskList = ({ changesDetected }) => {
                             edge="end"
                             aria-label="complete"
                             onClick={() => handleCompleteIconClick(task)}
+                            disabled={pendingCompleteIds.includes(task._id)} // 🚫 disable when loading
                             sx={{
                               '&:hover': {
                                 backgroundColor: 'rgba(76, 175, 80, 0.1)', // Light green hover effect
@@ -477,12 +489,17 @@ const TaskList = ({ changesDetected }) => {
                               animation: `${pulse} 2s infinite`, // Pulse animation on hover
                             }}
                           >
-                            <CheckCircleOutlineIcon color="success" />
+                            {pendingCompleteIds.includes(task._id) ? (
+                              <CircularProgress size={24} color="success" />
+                            ) : (
+                              <CheckCircleOutlineIcon color="success" />
+                            )}
                           </IconButton>
                           <IconButton
                             edge="end"
                             aria-label="delete"
                             onClick={() => handleDeleteIconClick(task)}
+                            disabled={pendingDeleteIds.includes(task._id)} // 🚫 disable when loading
                             sx={{
                               '&:hover': {
                                 backgroundColor: 'rgba(244, 67, 54, 0.1)', // Light red hover effect
@@ -493,7 +510,11 @@ const TaskList = ({ changesDetected }) => {
                               animation: `${pulse} 2s infinite`, // Pulse animation on hover
                             }}
                           >
-                            <DeleteOutlineIcon color="error" />
+                            {pendingDeleteIds.includes(task._id) ? (
+                              <CircularProgress size={24} color="error" />
+                            ) : (
+                              <DeleteOutlineIcon color="error" />
+                            )}
                           </IconButton>
                         </Box>
                       }
@@ -765,6 +786,7 @@ const TaskList = ({ changesDetected }) => {
                               edge="end"
                               aria-label="complete"
                               onClick={() => handleCompleteIconClick(task)}
+                              disabled={pendingCompleteIds.includes(task._id)} // 🚫 disable when loading
                               sx={{
                                 '&:hover': {
                                   backgroundColor: 'rgba(76, 175, 80, 0.1)', // Light green hover effect
@@ -775,12 +797,17 @@ const TaskList = ({ changesDetected }) => {
                                 animation: `${pulse} 2s infinite`, // Pulse animation on hover
                               }}
                             >
-                              <CheckCircleOutlineIcon color="success" />
+                              {pendingCompleteIds.includes(task._id) ? (
+                                <CircularProgress size={24} color="success" />
+                              ) : (
+                                <CheckCircleOutlineIcon color="success" />
+                              )}
                             </IconButton>
                             <IconButton
                               edge="end"
                               aria-label="delete"
                               onClick={() => handleDeleteIconClick(task)}
+                              disabled={pendingDeleteIds.includes(task._id)} // 🚫 disable when loading
                               sx={{
                                 '&:hover': {
                                   backgroundColor: 'rgba(244, 67, 54, 0.1)', // Light red hover effect
@@ -791,7 +818,11 @@ const TaskList = ({ changesDetected }) => {
                                 animation: `${pulse} 2s infinite`, // Pulse animation on hover
                               }}
                             >
-                              <DeleteOutlineIcon color="error" />
+                              {pendingDeleteIds.includes(task._id) ? (
+                                <CircularProgress size={24} color="error" />
+                              ) : (
+                                <DeleteOutlineIcon color="error" />
+                              )}
                             </IconButton>
                           </Box>
                         }
@@ -1064,6 +1095,7 @@ const TaskList = ({ changesDetected }) => {
                               edge="end"
                               aria-label="delete"
                               onClick={() => handleDeleteIconClick(task)}
+                              disabled={pendingDeleteIds.includes(task._id)} // 🚫 disable when loading
                               sx={{
                                 '&:hover': {
                                   backgroundColor: 'rgba(244, 67, 54, 0.1)', // Light red hover effect
@@ -1074,7 +1106,11 @@ const TaskList = ({ changesDetected }) => {
                                 animation: `${pulse} 2s infinite`, // Pulse animation on hover
                               }}
                             >
-                              <DeleteOutlineIcon color="error" />
+                              {pendingDeleteIds.includes(task._id) ? (
+                                <CircularProgress size={24} color="error" />
+                              ) : (
+                                <DeleteOutlineIcon color="error" />
+                              )}
                             </IconButton>
                           </Box>
                         }
