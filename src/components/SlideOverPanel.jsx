@@ -16,7 +16,7 @@ export default function InfoModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="relative bg-white text-black w-full max-w-2xl max-h-[90vh] rounded-lg shadow-xl overflow-y-auto p-6">
-        
+
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -62,70 +62,70 @@ export default function InfoModal({ isOpen, onClose }) {
         </blockquote>
 
         <button
-  onClick={() => {
-    if (isAuthenticated) {
-      navigate('/todo-list');
-    } else {
-      setOpenDialog(true);
-    }
-  }}
-  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
->
-  Try It — It’s Free
-</button>
+          onClick={() => {
+            if (isAuthenticated) {
+              navigate('/todo-list');
+            } else {
+              setOpenDialog(true);
+            }
+          }}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
+        >
+          Try It — It’s Free
+        </button>
 
       </div>
-      <Dialog 
-              open={openDialog} 
-              onClose={() => setOpenDialog(false)}
-              PaperProps={{
-                sx: {
-                  width: '100%',
-                  maxWidth: '500px',
-                  m: 2,
-                  overflowX: 'hidden',  // Prevent horizontal scroll
-                  '& .MuiDialogTitle-root': {
-                    pb: 2,
-                  },
-                  '& .MuiDialogContent-root': {
-                    pb: 2,
-                    px: 3,
-                    overflowX: 'hidden',  // Prevent horizontal scroll
-                  },
-                  '& .MuiDialogActions-root': {
-                    px: 3,
-                    pb: 2,
-                  }
-                }
-              }}
-            >
-              <DialogTitle sx={{ pr: 6 }}>  {/* Added right padding for close button */}
-                Protected Page
-                <IconButton 
-                  edge="end" 
-                  color="inherit" 
-                  onClick={() => setOpenDialog(false)} 
-                  aria-label="close" 
-                  sx={{
-                    position: 'absolute', 
-                    right: 8, 
-                    top: 8
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
-              </DialogTitle>
-              <DialogContent>
-                <Alert severity="info">
-                  Please sign up to access this page.
-                </Alert>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={() => setOpenDialog(false)} color="primary">
-                  Close
-                </Button>
-              </DialogActions>
-            </Dialog>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        PaperProps={{
+          sx: {
+            width: '100%',
+            maxWidth: '500px',
+            m: 2,
+            overflowX: 'hidden',  // Prevent horizontal scroll
+            '& .MuiDialogTitle-root': {
+              pb: 2,
+            },
+            '& .MuiDialogContent-root': {
+              pb: 2,
+              px: 3,
+              overflowX: 'hidden',  // Prevent horizontal scroll
+            },
+            '& .MuiDialogActions-root': {
+              px: 3,
+              pb: 2,
+            }
+          }
+        }}
+      >
+        <DialogTitle sx={{ pr: 6 }}>  {/* Added right padding for close button */}
+          Protected Page
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={() => setOpenDialog(false)}
+            aria-label="close"
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Alert severity="info">
+            Please sign up to access this page.
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import { Alert } from "@mui/material";
 import SlideOverPanel from "../components/SlideOverPanel";
 
 export default function Home() {
-  
+
   const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false); // State to manage dialog visibility
@@ -20,30 +20,30 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-sky-600 to-cyan-800 text-black">
       <main className="flex-1">
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 text-center bg-gradient-to-r from-[#a1c4fd] to-[#c2e9fb] flex items-center justify-center">
-  <motion.div 
-    initial={{ opacity: 0, y: -50 }} 
-    animate={{ opacity: 1, y: 0 }} 
-    transition={{ duration: 1 }}
-    className="container px-4 md:px-6"
-  >
-    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter drop-shadow-lg">
-      Stay Organized, Stay Productive
-    </h1>
-    <p className="mx-auto max-w-[700px] text-lg md:text-xl mt-4">
-      Manage your tasks effortlessly with our modern To-Do List app.
-    </p>
-    <div className="mt-6 space-x-4">
-      <Button className="bg-cyan-600 hover:bg-cyan-700 shadow-lg" onClick={() => {
-          isAuthenticated ? navigate('/todo-list') : setOpenDialog(true)
-        }} 
-        >
-          Get Started
-        </Button>
-      <Button variant="outline" className="border-black text-black hover:bg-black hover:text-cyan-500" onClick={() => setShowPanel(true)}>Learn More</Button>
-    </div>
-  </motion.div>
-</section>
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 text-center bg-gradient-to-r from-[#a1c4fd] to-[#c2e9fb] flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="container px-4 md:px-6"
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter drop-shadow-lg">
+              Stay Organized, Stay Productive
+            </h1>
+            <p className="mx-auto max-w-[700px] text-lg md:text-xl mt-4">
+              Manage your tasks effortlessly with our modern To-Do List app.
+            </p>
+            <div className="mt-6 space-x-4">
+              <Button className="bg-cyan-600 hover:bg-cyan-700 shadow-lg" onClick={() => {
+                isAuthenticated ? navigate('/todo-list') : setOpenDialog(true)
+              }}
+              >
+                Get Started
+              </Button>
+              <Button variant="outline" className="border-black text-black hover:bg-black hover:text-cyan-500" onClick={() => setShowPanel(true)}>Learn More</Button>
+            </div>
+          </motion.div>
+        </section>
 
 
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-white via-gray-100 to-white text-black flex items-center justify-center" >
@@ -91,58 +91,58 @@ export default function Home() {
         </section>
       </main>
       {/* Warning Dialog */}
-            <Dialog 
-              open={openDialog} 
-              onClose={() => setOpenDialog(false)}
-              PaperProps={{
-                sx: {
-                  width: '100%',
-                  maxWidth: '500px',
-                  m: 2,
-                  overflowX: 'hidden',  // Prevent horizontal scroll
-                  '& .MuiDialogTitle-root': {
-                    pb: 2,
-                  },
-                  '& .MuiDialogContent-root': {
-                    pb: 2,
-                    px: 3,
-                    overflowX: 'hidden',  // Prevent horizontal scroll
-                  },
-                  '& .MuiDialogActions-root': {
-                    px: 3,
-                    pb: 2,
-                  }
-                }
-              }}
-            >
-              <DialogTitle sx={{ pr: 6 }}>  {/* Added right padding for close button */}
-                Protected Page
-                <IconButton 
-                  edge="end" 
-                  color="inherit" 
-                  onClick={() => setOpenDialog(false)} 
-                  aria-label="close" 
-                  sx={{
-                    position: 'absolute', 
-                    right: 8, 
-                    top: 8
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
-              </DialogTitle>
-              <DialogContent>
-                <Alert severity="info">
-                  Please sign up to access this page.
-                </Alert>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={() => setOpenDialog(false)} color="primary">
-                  Close
-                </Button>
-              </DialogActions>
-            </Dialog>
-            <SlideOverPanel isOpen={showPanel} onClose={() => setShowPanel(false)} />
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        PaperProps={{
+          sx: {
+            width: '100%',
+            maxWidth: '500px',
+            m: 2,
+            overflowX: 'hidden',  // Prevent horizontal scroll
+            '& .MuiDialogTitle-root': {
+              pb: 2,
+            },
+            '& .MuiDialogContent-root': {
+              pb: 2,
+              px: 3,
+              overflowX: 'hidden',  // Prevent horizontal scroll
+            },
+            '& .MuiDialogActions-root': {
+              px: 3,
+              pb: 2,
+            }
+          }
+        }}
+      >
+        <DialogTitle sx={{ pr: 6 }}>  {/* Added right padding for close button */}
+          Protected Page
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={() => setOpenDialog(false)}
+            aria-label="close"
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Alert severity="info">
+            Please sign up to access this page.
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <SlideOverPanel isOpen={showPanel} onClose={() => setShowPanel(false)} />
     </div>
   )
 }

@@ -16,40 +16,40 @@ async function sendEmailRequest(user_name, user_email, user_phoneNo, user_msg, i
   console.log(user_name, user_email, user_phoneNo, user_msg, isUserEmail);
   const currentTime = new Date();
 
-// Extract the individual components
-const day = String(currentTime.getDate()).padStart(2, '0');
-const month = String(currentTime.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-const year = currentTime.getFullYear();
-const hours = String(currentTime.getHours()).padStart(2, '0');
-const minutes = String(currentTime.getMinutes()).padStart(2, '0');
-const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+  // Extract the individual components
+  const day = String(currentTime.getDate()).padStart(2, '0');
+  const month = String(currentTime.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const year = currentTime.getFullYear();
+  const hours = String(currentTime.getHours()).padStart(2, '0');
+  const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+  const seconds = String(currentTime.getSeconds()).padStart(2, '0');
 
-// Format the date and time
-const date_time = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+  // Format the date and time
+  const date_time = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 
-console.log(date_time);
-  
+  console.log(date_time);
+
   const subject = "To Do List Query";
   let jsonPayload;
-  
+
   if (isUserEmail) {
-      jsonPayload = {
-          to: [{ name: user_name, email: user_email }],
-          variables: { user_name, user_msg },
-          from: { name: "Rizvi Co-operation", email: "no-reply@ubadaa.site" },
-          domain: "ubadaa.site",
-          template_id: "template_18_09_2024_11_09_2"
-      };
+    jsonPayload = {
+      to: [{ name: user_name, email: user_email }],
+      variables: { user_name, user_msg },
+      from: { name: "Rizvi Co-operation", email: "no-reply@ubadaa.site" },
+      domain: "ubadaa.site",
+      template_id: "template_18_09_2024_11_09_2"
+    };
   } else {
-      jsonPayload = {
-          to: [{ name: "Ubada Ghavte", email: "ubadaghawte2005@gmail.com" }],
-          variables: { subject, user_name, user_email, user_phoneNo, date_time, user_msg },
-          from: { name: "Rizvi Co-operation", email: "no-reply@ubadaa.site" },
-          domain: "ubadaa.site",
-          template_id: "template_18_09_2024_11_09_3"
-      };
+    jsonPayload = {
+      to: [{ name: "Ubada Ghavte", email: "ubadaghawte2005@gmail.com" }],
+      variables: { subject, user_name, user_email, user_phoneNo, date_time, user_msg },
+      from: { name: "Rizvi Co-operation", email: "no-reply@ubadaa.site" },
+      domain: "ubadaa.site",
+      template_id: "template_18_09_2024_11_09_3"
+    };
   }
-  
+
   const token = await getAccessTokenSilently({ audience: 'https://todo.api' });
   try {
     const response = await fetch("https://to-do-list-backend-hazel.vercel.app/api/tasks/send-email", {
@@ -68,8 +68,8 @@ console.log(date_time);
     const data = await response.json();
     console.log('Email Sent:', data);
 
-     // Check for the success status in the response data
-     if (data.status === "success" && !data.hasError) {
+    // Check for the success status in the response data
+    if (data.status === "success" && !data.hasError) {
       return true; // Email successfully sent
     } else {
       console.error('Error in email sending:', data.errors);
@@ -126,7 +126,7 @@ export default function ContactForm() {
       }
     }
   }, []);
-  
+
 
   const onSubmit = async (values) => {
     console.log(values);
@@ -156,11 +156,11 @@ export default function ContactForm() {
     const hours = Math.floor(time / 3600000); // Get hours
     const minutes = Math.floor((time % 3600000) / 60000); // Get minutes
     const seconds = Math.floor((time % 60000) / 1000); // Get seconds
-  
+
     // Format it to hh:mm:ss
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
-  
+
 
   if (isSubmitted) {
     return <SubmissionSuccess onGoBack={handleGoBack} />;
@@ -195,7 +195,7 @@ export default function ContactForm() {
             <FormItem>
               <FormLabel className="text-lg font-semibold text-gray-700">Email</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="Your email" {...field} className="p-3 rounded-lg border-2 border-gray-400 focus:border-teal-500" value={user.email} readOnly/>
+                <Input type="email" placeholder="Your email" {...field} className="p-3 rounded-lg border-2 border-gray-400 focus:border-teal-500" value={user.email} readOnly />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -227,16 +227,16 @@ export default function ContactForm() {
             </FormItem>
           )}
         />
-        <Button 
-         type="submit" 
-         className="w-full bg-teal-500 text-white hover:bg-teal-600 p-3 rounded-lg"
-         disabled={remainingTime > 0} // Disable the button if timer is active
+        <Button
+          type="submit"
+          className="w-full bg-teal-500 text-white hover:bg-teal-600 p-3 rounded-lg"
+          disabled={remainingTime > 0} // Disable the button if timer is active
         >
           {remainingTime > 0
-           ? `⏳ Please wait ${formatTime(remainingTime)}`
-           : isLoading
-           ? "🔄 Submitting..."
-           : "✅ Submit"}
+            ? `⏳ Please wait ${formatTime(remainingTime)}`
+            : isLoading
+              ? "🔄 Submitting..."
+              : "✅ Submit"}
         </Button>
 
       </motion.form>

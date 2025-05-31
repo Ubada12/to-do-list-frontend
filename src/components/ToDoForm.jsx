@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import TaskAlert from './TaskAlert';  // Import TaskAlert component
-import { 
-  TextField, 
-  MenuItem, 
-  FormControl, 
-  Select, 
-  InputLabel, 
-  FormControlLabel, 
-  Switch, 
-  Button, 
-  Card, 
-  CardContent, 
+import {
+  TextField,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+  FormControlLabel,
+  Switch,
+  Button,
+  Card,
+  CardContent,
   Typography,
   Box
 } from "@mui/material";
@@ -42,7 +42,7 @@ const ToDoForm = ({ onChangesDetected }) => {
 
   const handleSubmission = async (e) => {
     e.preventDefault();
-  
+
     // Ensure task completion flag is set
     task.completed = false;
     console.log("Task data:", task);
@@ -56,18 +56,18 @@ const ToDoForm = ({ onChangesDetected }) => {
         },
         body: JSON.stringify({ email: user.email, taskData: task }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to add task"); // Handle failed request
       }
-  
+
       // If request was successful
       setAlertText("Task added successfully!");
       setShowAlert(true);
       setChangesDetected(true);  // Track that changes were detected
       onChangesDetected(prev => !prev);  // Notify the parent component
-      
-  
+
+
       // Reset the form
       setTask({
         title: "",
@@ -77,40 +77,40 @@ const ToDoForm = ({ onChangesDetected }) => {
         priority: "Medium",
         daily: false,
       });
-  
+
     } catch (error) {
       console.error("Error adding task:", error);
     }
-  };  
+  };
 
   const handleToggle = () => {
-    setTask((prev) => ({ 
-      ...prev, 
-      daily: !prev.daily, 
-      priority: "Medium", 
-      deadline: "" 
+    setTask((prev) => ({
+      ...prev,
+      daily: !prev.daily,
+      priority: "Medium",
+      deadline: ""
     }));
   };
 
   return (
-    <Box 
+    <Box
       component={motion.div}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      sx={{ 
+      sx={{
         padding: { xs: 2, sm: 3 },
         maxWidth: "600px",
         margin: "20px auto"
       }}
     >
-      <Card 
+      <Card
         elevation={6}
         component={motion.div}
-        whileHover={{ 
+        whileHover={{
           scale: 1.01,
           boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.4)',
-          backgroundColor: 'rgba(255, 255, 255, 0.95)' 
+          backgroundColor: 'rgba(255, 255, 255, 0.95)'
         }}
         transition={{ type: "spring", stiffness: 300 }}
         sx={{
@@ -122,8 +122,8 @@ const ToDoForm = ({ onChangesDetected }) => {
         }}
       >
         <CardContent sx={{ p: 4 }}>
-          <Typography 
-            variant="h4" 
+          <Typography
+            variant="h4"
             component={motion.h4}
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
@@ -138,10 +138,10 @@ const ToDoForm = ({ onChangesDetected }) => {
             Create a Task
           </Typography>
 
-          <Box 
-            component="form" 
+          <Box
+            component="form"
             onSubmit={handleSubmission}
-            sx={{ 
+            sx={{
               display: 'flex',
               flexDirection: 'column',
               gap: 3,
@@ -224,8 +224,8 @@ const ToDoForm = ({ onChangesDetected }) => {
             </div>
 
             <div className="form-group-2">
-              <FormControl 
-                fullWidth 
+              <FormControl
+                fullWidth
                 disabled={task.daily}
                 sx={{
                   '& .MuiOutlinedInput-notchedOutline': {
@@ -282,10 +282,10 @@ const ToDoForm = ({ onChangesDetected }) => {
 
             <FormControlLabel
               control={
-                <Switch 
-                  checked={task.daily} 
-                  onChange={handleToggle} 
-                  color="primary" 
+                <Switch
+                  checked={task.daily}
+                  onChange={handleToggle}
+                  color="primary"
                 />
               }
               label="Daily Task"
@@ -299,39 +299,39 @@ const ToDoForm = ({ onChangesDetected }) => {
                 },
               }}
             />
-            
-            <Button
-            component={motion.button} // ✅ Framer Motion applied to Button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }} // ✅ Moved from motion.div to Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            type="submit" // ✅ Now works properly
-            startIcon={<AddTaskIcon />}
-            sx={{
-              py: 1.5,
-              borderRadius: 2,
-              textTransform: 'none',
-              fontSize: '1.1rem',
-              fontWeight: '600',
-              boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)',
-              transition: 'all 0.3s ease-in-out',
-              '&:hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 6px 20px rgba(0,118,255,0.23)',
-                background: 'primary.dark'
-              },
-            }}
-          >
-            Add Task
-          </Button>
 
-         </Box>
+            <Button
+              component={motion.button} // ✅ Framer Motion applied to Button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }} // ✅ Moved from motion.div to Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              type="submit" // ✅ Now works properly
+              startIcon={<AddTaskIcon />}
+              sx={{
+                py: 1.5,
+                borderRadius: 2,
+                textTransform: 'none',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)',
+                transition: 'all 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 6px 20px rgba(0,118,255,0.23)',
+                  background: 'primary.dark'
+                },
+              }}
+            >
+              Add Task
+            </Button>
+
+          </Box>
         </CardContent>
       </Card>
       {/* TaskAlert is rendered here based on state */}
-      <TaskAlert showAlert={showAlert} setShowAlert={setShowAlert} text={alertText} showUndo={false}/>
+      <TaskAlert showAlert={showAlert} setShowAlert={setShowAlert} text={alertText} showUndo={false} />
     </Box>
   );
 };

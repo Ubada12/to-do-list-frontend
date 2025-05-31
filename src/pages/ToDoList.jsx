@@ -11,7 +11,7 @@ const TodoList = () => {
     setChangesDetected(newChangesDetected);
     console.log(changesDetected);
   };
-      
+
   return (
     <Box
       sx={{
